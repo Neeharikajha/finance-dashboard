@@ -81,7 +81,8 @@ export default function DashboardGrid({ widgets, onDelete, onEdit, onConfig }) {
       onLayoutChange={handleLayoutChange}
       isResizable={false}             // resize disable
       isDraggable={true}              // drag enabled
-      draggableHandle=".drag-handle"  // 👈 sirf ye class drag karegi
+      draggableHandle=".drag-handle"
+      compactType={null}
     >
       {widgets.map((widget) => (
         <div key={widget.id} className="p-2">
