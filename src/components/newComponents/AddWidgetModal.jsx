@@ -1,60 +1,10 @@
-// "use client";
-
-// import { useState } from "react";
-
-// export default function AddWidgetModal({ isOpen, onClose, onAdd }) {
-//   const [title, setTitle] = useState("");
-//   const [content, setContent] = useState("");
-
-//   if (!isOpen) return null;
-
-//   const handleAdd = () => {
-//     onAdd({ id: Date.now(), title, content });
-//     setTitle("");
-//     setContent("");
-//     onClose();
-//   };
-
-//   return (
-//     <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
-//       <div className="bg-white p-6 rounded shadow w-96">
-//         <h2 className="text-xl font-bold mb-4">Add Widget</h2>
-//         <input
-//           type="text"
-//           placeholder="Title"
-//           value={title}
-//           onChange={(e) => setTitle(e.target.value)}
-//           className="w-full p-2 border rounded mb-2"
-//         />
-//         <textarea
-//           placeholder="Content"
-//           value={content}
-//           onChange={(e) => setContent(e.target.value)}
-//           className="w-full p-2 border rounded mb-4"
-//         />
-//         <div className="flex justify-end gap-2">
-//           <button onClick={onClose} className="px-4 py-2 bg-gray-200 rounded">
-//             Cancel
-//           </button>
-//           <button onClick={handleAdd} className="px-4 py-2 bg-blue-600 text-white rounded">
-//             Add
-//           </button>
-//         </div>
-//       </div>
-//     </div>
-//   );
-// }
-
-
 "use client";
-
 import { useState, useEffect } from "react";
 
 export default function AddWidgetModal({ isOpen, onClose, onAdd, editingWidget }) {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
 
-  // Prefill fields if editingWidget changes
   useEffect(() => {
     if (editingWidget) {
       setTitle(editingWidget.title);
@@ -68,7 +18,6 @@ export default function AddWidgetModal({ isOpen, onClose, onAdd, editingWidget }
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!title.trim() || !content.trim()) return;
-
     onAdd({ title, content });
     setTitle("");
     setContent("");
