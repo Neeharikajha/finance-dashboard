@@ -1,5 +1,6 @@
 "use client";
 import { useState, useEffect, useRef } from "react";
+import { WidgetLoadingWrapper, ChartSkeleton } from "../LoadingStates";
 
 export default function ChartWidget({ widget }) {
   const [chartData, setChartData] = useState([]);
@@ -262,7 +263,13 @@ export default function ChartWidget({ widget }) {
       )}
 
       <div className="flex-1 bg-white border rounded-lg p-4">
-        {chartData.length > 0 ? (
+        <WidgetLoadingWrapper
+          loading={loading}
+          error={error}
+          widgetType="chart"
+          empty={!Array.isArray(chartData) || chartData.length === 0}
+          emptyMessage="No chart data available"
+        >
           <div className="h-full">
             <div className="text-sm text-gray-600 mb-2">
               {widget.chartType === 'candle' ? 'Candlestick' : 'Line'} Chart - {getIntervalLabel(selectedInterval)}
@@ -273,15 +280,7 @@ export default function ChartWidget({ widget }) {
               style={{ maxHeight: '300px' }}
             />
           </div>
-        ) : (
-          <div className="h-full flex items-center justify-center text-gray-500">
-            <div className="text-center">
-              <div className="text-4xl mb-2">📈</div>
-              <p>No chart data available</p>
-              <p className="text-sm">Configure symbol and API endpoint to load real data</p>
-            </div>
-          </div>
-        )}
+        </WidgetLoadingWrapper>
       </div>
     </div>
   );

@@ -1,5 +1,6 @@
 "use client";
 import { useState, useEffect } from "react";
+import { WidgetLoadingWrapper, TableSkeleton } from "../LoadingStates";
 
 export default function TableWidget({ widget }) {
   const [stocks, setStocks] = useState([]);
@@ -94,14 +95,14 @@ export default function TableWidget({ widget }) {
     }
   };
 
-  const filteredStocks = stocks.filter(stock => {
+  const filteredStocks = Array.isArray(stocks) ? stocks.filter(stock => {
     const matchesSearch = stock.symbol.toLowerCase().includes(searchTerm.toLowerCase()) ||
                          stock.name.toLowerCase().includes(searchTerm.toLowerCase());
     
     if (filter === "gainers") return stock.change > 0;
     if (filter === "losers") return stock.change < 0;
     return matchesSearch;
-  });
+  }) : [];
 
   const totalPages = Math.ceil(filteredStocks.length / itemsPerPage);
   const startIndex = (currentPage - 1) * itemsPerPage;
@@ -150,34 +151,42 @@ export default function TableWidget({ widget }) {
       </div>
 
       <div className="flex-1 overflow-auto">
-        <table className="w-full text-sm">
-          <thead className="bg-gray-50 sticky top-0">
-            <tr>
-              <th className="text-left p-2 font-medium">Symbol</th>
-              <th className="text-left p-2 font-medium">Name</th>
-              <th className="text-right p-2 font-medium">Price</th>
-              <th className="text-right p-2 font-medium">Change</th>
-              <th className="text-right p-2 font-medium">% Change</th>
-              <th className="text-right p-2 font-medium">Volume</th>
-            </tr>
-          </thead>
-          <tbody>
-            {paginatedStocks.map((stock, index) => (
-              <tr key={stock.symbol} className={index % 2 === 0 ? "bg-white" : "bg-gray-50"}>
-                <td className="p-2 font-medium">{stock.symbol}</td>
-                <td className="p-2">{stock.name}</td>
-                <td className="p-2 text-right">{formatPrice(stock.price)}</td>
-                <td className={`p-2 text-right ${stock.change >= 0 ? "text-green-600" : "text-red-600"}`}>
-                  {formatChange(stock.change)}
-                </td>
-                <td className={`p-2 text-right ${stock.changePercent >= 0 ? "text-green-600" : "text-red-600"}`}>
-                  {formatChangePercent(stock.changePercent)}
-                </td>
-                <td className="p-2 text-right">{stock.volume.toLocaleString()}</td>
+        <WidgetLoadingWrapper
+          loading={loading}
+          error={error}
+          widgetType="table"
+          empty={!Array.isArray(stocks) || stocks.length === 0}
+          emptyMessage="No stock data available"
+        >
+          <table className="w-full text-sm">
+            <thead className="bg-gray-50 sticky top-0">
+              <tr>
+                <th className="text-left p-2 font-medium">Symbol</th>
+                <th className="text-left p-2 font-medium">Name</th>
+                <th className="text-right p-2 font-medium">Price</th>
+                <th className="text-right p-2 font-medium">Change</th>
+                <th className="text-right p-2 font-medium">% Change</th>
+                <th className="text-right p-2 font-medium">Volume</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {paginatedStocks.map((stock, index) => (
+                <tr key={stock.symbol} className={index % 2 === 0 ? "bg-white" : "bg-gray-50"}>
+                  <td className="p-2 font-medium">{stock.symbol}</td>
+                  <td className="p-2">{stock.name}</td>
+                  <td className="p-2 text-right">{formatPrice(stock.price)}</td>
+                  <td className={`p-2 text-right ${stock.change >= 0 ? "text-green-600" : "text-red-600"}`}>
+                    {formatChange(stock.change)}
+                  </td>
+                  <td className={`p-2 text-right ${stock.changePercent >= 0 ? "text-green-600" : "text-red-600"}`}>
+                    {formatChangePercent(stock.changePercent)}
+                  </td>
+                  <td className="p-2 text-right">{stock.volume.toLocaleString()}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </WidgetLoadingWrapper>
       </div>
 
       {totalPages > 1 && (

@@ -1,5 +1,6 @@
 "use client";
 import { useState } from "react";
+import { LoadingSpinner } from "./LoadingStates";
 
 export default function ApiTester() {
   const [apiKey, setApiKey] = useState("");
@@ -107,7 +108,12 @@ export default function ApiTester() {
             disabled={loading}
             className="flex-1 bg-blue-600 text-white py-2 px-4 rounded hover:bg-blue-700 disabled:opacity-50"
           >
-            {loading ? "Testing..." : "Test Alpha Vantage API"}
+            {loading ? (
+              <div className="flex items-center gap-2">
+                <LoadingSpinner size="sm" />
+                Testing...
+              </div>
+            ) : "Test Alpha Vantage API"}
           </button>
           
           <button
@@ -115,7 +121,12 @@ export default function ApiTester() {
             disabled={loading}
             className="flex-1 bg-green-600 text-white py-2 px-4 rounded hover:bg-green-700 disabled:opacity-50"
           >
-            {loading ? "Testing..." : "Test Yahoo Finance (Free)"}
+            {loading ? (
+              <div className="flex items-center gap-2">
+                <LoadingSpinner size="sm" />
+                Testing...
+              </div>
+            ) : "Test Yahoo Finance (Free)"}
           </button>
         </div>
 

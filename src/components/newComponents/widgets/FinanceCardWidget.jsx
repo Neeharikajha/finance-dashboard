@@ -1,5 +1,6 @@
 "use client";
 import { useState, useEffect } from "react";
+import { WidgetLoadingWrapper, CardSkeleton } from "../LoadingStates";
 
 export default function FinanceCardWidget({ widget }) {
   const [data, setData] = useState([]);
@@ -155,20 +156,18 @@ export default function FinanceCardWidget({ widget }) {
       )}
 
       <div className="flex-1 overflow-auto">
-        <div className="grid gap-4">
-          {data.map(renderCard)}
-        </div>
-      </div>
-
-      {data.length === 0 && !loading && (
-        <div className="flex-1 flex items-center justify-center text-gray-500">
-          <div className="text-center">
-            <div className="text-4xl mb-2">📊</div>
-            <p>No data available</p>
-            <p className="text-sm">Configure API endpoint to load real data</p>
+        <WidgetLoadingWrapper
+          loading={loading}
+          error={error}
+          widgetType="finance_card"
+          empty={!Array.isArray(data) || data.length === 0}
+          emptyMessage="No financial data available"
+        >
+          <div className="grid gap-4">
+            {Array.isArray(data) && data.map(renderCard)}
           </div>
-        </div>
-      )}
+        </WidgetLoadingWrapper>
+      </div>
     </div>
   );
 }
