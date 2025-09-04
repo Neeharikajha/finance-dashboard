@@ -9,15 +9,23 @@ const widgetsSlice = createSlice({
   initialState,
   reducers: {
     addWidget: (state, action) => {
-      state.widgets.push({
+      const newWidget = {
         ...action.payload,
-        id: Date.now(),
+        id: action.payload.id || Date.now(),
         x: 0,
         y: 0,
-        w: 1,
-        h: 1,
-        color: "#ffffff",
-      });
+        w: action.payload.w || 4,
+        h: action.payload.h || 3,
+        color: action.payload.color || "#ffffff",
+        type: action.payload.type || "table",
+        symbol: action.payload.symbol || "",
+        apiEndpoint: action.payload.apiEndpoint || "",
+        apiKey: action.payload.apiKey || "",
+        financeCardType: action.payload.financeCardType || "watchlist",
+        chartType: action.payload.chartType || "line",
+        chartInterval: action.payload.chartInterval || "1d",
+      };
+      state.widgets.push(newWidget);
     },
     removeWidget: (state, action) => {
       state.widgets = state.widgets.filter((w) => w.id !== action.payload);

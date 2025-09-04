@@ -6,6 +6,7 @@ import Header from "../components/newComponents/Header";
 import DashboardGrid from "../components/newComponents/DashboardGrid";
 import AddWidgetModal from "../components/newComponents/AddWidgetModal";
 import WidgetConfigModal from "../components/newComponents/WidgetConfigModal";
+import ApiTester from "../components/newComponents/ApiTester";
 
 import { addWidget, removeWidget, editWidget } from "../store/widgetsSlice";
 
@@ -20,6 +21,9 @@ export default function HomePage() {
   // Config panel state
   const [isConfigOpen, setConfigOpen] = useState(false);
   const [configWidget, setConfigWidget] = useState(null);
+
+  // API Tester state
+  const [showApiTester, setShowApiTester] = useState(false);
 
   // Add or update widget
   const handleAddWidget = (widget) => {
@@ -56,15 +60,30 @@ export default function HomePage() {
       <Header />
 
       <div className="p-4 max-w-7xl mx-auto">
-        <button
-          onClick={() => {
-            setEditingWidget(null);
-            setIsModalOpen(true);
-          }}
-          className="px-4 py-2 bg-blue-600 text-white rounded mb-6"
-        >
-          Add Widget
-        </button>
+        <div className="flex gap-4 mb-6">
+          <button
+            onClick={() => {
+              setEditingWidget(null);
+              setIsModalOpen(true);
+            }}
+            className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
+          >
+            Add Widget
+          </button>
+          
+          <button
+            onClick={() => setShowApiTester(!showApiTester)}
+            className="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700"
+          >
+            {showApiTester ? "Hide" : "Test"} API
+          </button>
+        </div>
+
+        {showApiTester && (
+          <div className="mb-6">
+            <ApiTester />
+          </div>
+        )}
 
         <DashboardGrid
           widgets={widgets}
