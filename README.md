@@ -35,6 +35,10 @@ npm run dev
 Add, move, and manage widgets.  
 ![Home Page](https://github.com/user-attachments/assets/49760638-59cf-4972-9d45-6643ee166626)
 
+dark theme :
+<img width="1904" height="799" alt="Screenshot 2025-09-05 165006" src="https://github.com/user-attachments/assets/e22d95d5-8a4b-431d-9d21-2f2d35f0a78c" />
+
+
 ### Test Widget API
 Verify API response before adding a widget.  
 ![API Test](https://github.com/user-attachments/assets/bc9837af-aebf-4cd0-9e8c-e3b0f7cb7d43)
