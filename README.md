@@ -39,6 +39,9 @@ Add, move, and manage widgets.
 Verify API response before adding a widget.  
 ![API Test](https://github.com/user-attachments/assets/bc9837af-aebf-4cd0-9e8c-e3b0f7cb7d43)
 
+<img width="1774" height="836" alt="Screenshot 2025-09-05 154247" src="https://github.com/user-attachments/assets/da7d455b-deb7-4dd9-ac7d-fdff125286d7" />
+
+
 ### Add Widget
 Enter title, description, widget type, API key, and refresh interval.  
 ![Add Widget](https://github.com/user-attachments/assets/8c446030-bd41-4000-aa7b-3f2f6ee3932b)
