@@ -99,29 +99,29 @@ export default function AddWidgetModal({ isOpen, onClose, onAdd, editingWidget }
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-      <div className="bg-white rounded-lg p-6 w-[600px] max-h-[90vh] overflow-y-auto">
-        <h2 className="text-xl font-semibold mb-4">
+    <div className="fixed inset-0 bg-black/60 flex items-center justify-center z-50">
+      <div className="bg-white dark:bg-gray-800 rounded-lg p-6 w-[600px] max-h-[90vh] overflow-y-auto border border-gray-200 dark:border-gray-700">
+        <h2 className="text-xl font-semibold mb-4 text-gray-900 dark:text-gray-100">
           {editingWidget ? "Edit Widget" : "Add Finance Widget"}
         </h2>
-        <form onSubmit={handleSubmit} className="space-y-4">
+        <form onSubmit={handleSubmit} className="space-y-4 text-gray-900 dark:text-gray-100">
           <div>
-            <label className="block mb-1 font-medium">Widget Title</label>
+            <label className="block mb-1 font-medium text-gray-800 dark:text-gray-200">Widget Title</label>
             <input
               type="text"
               value={title}
               onChange={(e) => setTitle(e.target.value)}
-              className="w-full border px-3 py-2 rounded"
+              className="w-full border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 placeholder-gray-400 dark:placeholder-gray-500 px-3 py-2 rounded"
               placeholder="Enter widget title"
               required
             />
           </div>
 
           <div>
-            <label className="block mb-1 font-medium">Widget Type</label>
+            <label className="block mb-1 font-medium text-gray-800 dark:text-gray-200">Widget Type</label>
             <div className="grid grid-cols-1 gap-2">
               {Object.values(WIDGET_TYPES).map((type) => (
-                <label key={type.id} className="flex items-center p-3 border rounded cursor-pointer hover:bg-gray-50">
+                <label key={type.id} className="flex items-center p-3 border border-gray-300 dark:border-gray-700 rounded cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-900">
                   <input
                     type="radio"
                     name="widgetType"
@@ -132,8 +132,8 @@ export default function AddWidgetModal({ isOpen, onClose, onAdd, editingWidget }
                   />
                   <span className="text-2xl mr-3">{type.icon}</span>
                   <div>
-                    <div className="font-medium">{type.name}</div>
-                    <div className="text-sm text-gray-600">{type.description}</div>
+                    <div className="font-medium text-gray-900 dark:text-gray-100">{type.name}</div>
+                    <div className="text-sm text-gray-600 dark:text-gray-400">{type.description}</div>
                   </div>
                 </label>
               ))}
@@ -142,11 +142,11 @@ export default function AddWidgetModal({ isOpen, onClose, onAdd, editingWidget }
 
           {widgetType === 'finance_card' && (
             <div>
-              <label className="block mb-1 font-medium">Finance Card Type</label>
+              <label className="block mb-1 font-medium text-gray-800 dark:text-gray-200">Finance Card Type</label>
               <select
                 value={financeCardType}
                 onChange={(e) => setFinanceCardType(e.target.value)}
-                className="w-full border px-3 py-2 rounded"
+                className="w-full border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 px-3 py-2 rounded"
               >
                 <option value="watchlist">Watchlist</option>
                 <option value="market_gainers">Market Gainers</option>
@@ -159,22 +159,22 @@ export default function AddWidgetModal({ isOpen, onClose, onAdd, editingWidget }
           {widgetType === 'chart' && (
             <>
               <div>
-                <label className="block mb-1 font-medium">Chart Type</label>
+                <label className="block mb-1 font-medium text-gray-800 dark:text-gray-200">Chart Type</label>
                 <select
                   value={chartType}
                   onChange={(e) => setChartType(e.target.value)}
-                  className="w-full border px-3 py-2 rounded"
+                  className="w-full border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 px-3 py-2 rounded"
                 >
                   <option value="line">Line Chart</option>
                   <option value="candle">Candlestick Chart</option>
                 </select>
               </div>
               <div>
-                <label className="block mb-1 font-medium">Time Interval</label>
+                <label className="block mb-1 font-medium text-gray-800 dark:text-gray-200">Time Interval</label>
                 <select
                   value={chartInterval}
                   onChange={(e) => setChartInterval(e.target.value)}
-                  className="w-full border px-3 py-2 rounded"
+                  className="w-full border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 px-3 py-2 rounded"
                 >
                   <option value="1d">Daily</option>
                   <option value="1wk">Weekly</option>
@@ -185,34 +185,34 @@ export default function AddWidgetModal({ isOpen, onClose, onAdd, editingWidget }
           )}
 
           <div>
-            <label className="block mb-1 font-medium">Stock Symbol (Optional)</label>
+            <label className="block mb-1 font-medium text-gray-800 dark:text-gray-200">Stock Symbol (Optional)</label>
             <input
               type="text"
               value={symbol}
               onChange={(e) => setSymbol(e.target.value)}
-              className="w-full border px-3 py-2 rounded"
+              className="w-full border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 placeholder-gray-400 dark:placeholder-gray-500 px-3 py-2 rounded"
               placeholder="e.g., AAPL, GOOGL, MSFT"
             />
           </div>
 
           <div>
-            <label className="block mb-1 font-medium">API Endpoint</label>
+            <label className="block mb-1 font-medium text-gray-800 dark:text-gray-200">API Endpoint</label>
             <input
               type="url"
               value={apiEndpoint}
               onChange={(e) => setApiEndpoint(e.target.value)}
-              className="w-full border px-3 py-2 rounded"
+              className="w-full border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 placeholder-gray-400 dark:placeholder-gray-500 px-3 py-2 rounded"
               placeholder="https://api.example.com/stocks"
             />
           </div>
 
           <div>
-            <label className="block mb-1 font-medium">API Key (Optional)</label>
+            <label className="block mb-1 font-medium text-gray-800 dark:text-gray-200">API Key (Optional)</label>
             <input
               type="password"
               value={apiKey}
               onChange={(e) => setApiKey(e.target.value)}
-              className="w-full border px-3 py-2 rounded"
+              className="w-full border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 placeholder-gray-400 dark:placeholder-gray-500 px-3 py-2 rounded"
               placeholder="Your API key"
             />
           </div>
@@ -221,7 +221,7 @@ export default function AddWidgetModal({ isOpen, onClose, onAdd, editingWidget }
             <button
               type="button"
               onClick={onClose}
-              className="px-4 py-2 bg-gray-300 rounded hover:bg-gray-400"
+              className="px-4 py-2 bg-gray-200 dark:bg-gray-700 text-gray-900 dark:text-gray-100 rounded hover:bg-gray-300 dark:hover:bg-gray-600"
             >
               Cancel
             </button>

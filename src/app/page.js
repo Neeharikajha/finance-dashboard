@@ -115,7 +115,7 @@
 
 "use client";
 import { useSelector, useDispatch } from "react-redux";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import Header from "../components/newComponents/Header";
 import DashboardGrid from "../components/newComponents/DashboardGrid";
@@ -142,6 +142,11 @@ export default function HomePage() {
 
   // API Tester state
   const [showApiTester, setShowApiTester] = useState(false);
+
+  // Prevent hydration mismatch by rendering only after mount
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => setMounted(true), []);
+  if (!mounted) return null;
 
   // Add or update widget
   const handleAddWidget = (widget) => {

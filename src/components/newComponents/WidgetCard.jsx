@@ -63,40 +63,40 @@ export default function WidgetCard({ widget, onDelete, onEdit, onConfig }) {
 
   return (
     <div
-      className="shadow rounded-lg relative bg-white"
+      className="shadow rounded-lg relative bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700"
       style={{
-        backgroundColor: widget.color || "#ffffff",
+        backgroundColor: widget.color || undefined,
         width: widget.width ? `${widget.width}px` : "100%",
         height: widget.height ? `${widget.height}px` : "400px",
       }}
     >
       {/* Widget Header */}
-      <div className="flex justify-between items-center p-4 border-b bg-gray-50 rounded-t-lg">
+      <div className="flex justify-between items-center p-4 border-b bg-gray-50 dark:bg-gray-900/40 rounded-t-lg border-gray-200 dark:border-gray-700">
         <div className="flex items-center gap-2">
           <span className="cursor-move drag-handle text-gray-400 text-lg">⠿</span>
-          <h2 className="font-semibold text-lg">{widget.title}</h2>
-          <span className="text-xs bg-blue-100 text-blue-800 px-2 py-1 rounded">
+          <h2 className="font-semibold text-lg text-gray-900 dark:text-gray-100">{widget.title}</h2>
+          <span className="text-xs bg-blue-100 dark:bg-blue-900/40 text-blue-800 dark:text-blue-200 px-2 py-1 rounded">
             {widget.type?.replace('_', ' ').toUpperCase() || 'WIDGET'}
           </span>
         </div>
         <div className="flex gap-1">
           <button
             onClick={() => onEdit(widget)}
-            className="p-1 text-yellow-600 hover:bg-yellow-100 rounded"
+            className="p-1 text-yellow-700 dark:text-yellow-400 hover:bg-yellow-100 dark:hover:bg-yellow-900/30 rounded"
             title="Edit Widget"
           >
             ✏️
           </button>
           <button
             onClick={() => onConfig(widget)}
-            className="p-1 text-blue-600 hover:bg-blue-100 rounded"
+            className="p-1 text-blue-600 dark:text-blue-400 hover:bg-blue-100 dark:hover:bg-blue-900/30 rounded"
             title="Configure Widget"
           >
             ⚙️
           </button>
           <button
             onClick={() => onDelete(widget.id)}
-            className="p-1 text-red-600 hover:bg-red-100 rounded"
+            className="p-1 text-red-600 dark:text-red-400 hover:bg-red-100 dark:hover:bg-red-900/30 rounded"
             title="Delete Widget"
           >
             🗑️
@@ -105,7 +105,7 @@ export default function WidgetCard({ widget, onDelete, onEdit, onConfig }) {
       </div>
 
       {/* Widget Content */}
-      <div className="p-4 h-full overflow-hidden" style={{ height: `calc(100% - 60px)` }}>
+      <div className="p-4 h-full overflow-hidden text-gray-900 dark:text-gray-100" style={{ height: `calc(100% - 60px)` }}>
         {renderWidgetContent()}
       </div>
     </div>

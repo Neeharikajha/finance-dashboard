@@ -55,48 +55,48 @@ export default function WidgetConfigModal({ isOpen, onClose, widget }) {
   if (!isOpen || !widget) return null;
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-      <div className="bg-white rounded-lg p-6 w-[600px] max-h-[90vh] overflow-y-auto">
-        <h2 className="text-xl font-semibold mb-4">Configure Widget</h2>
-        <form onSubmit={handleSubmit} className="space-y-4">
+    <div className="fixed inset-0 bg-black/60 flex items-center justify-center z-50">
+      <div className="bg-white dark:bg-gray-800 rounded-lg p-6 w-[600px] max-h-[90vh] overflow-y-auto border border-gray-200 dark:border-gray-700">
+        <h2 className="text-xl font-semibold mb-4 text-gray-900 dark:text-gray-100">Configure Widget</h2>
+        <form onSubmit={handleSubmit} className="space-y-4 text-gray-900 dark:text-gray-100">
           <div>
-            <label className="block mb-1 font-medium">Widget Title</label>
+            <label className="block mb-1 font-medium text-gray-800 dark:text-gray-200">Widget Title</label>
             <input
               type="text"
               value={title}
               onChange={(e) => setTitle(e.target.value)}
-              className="w-full border px-3 py-2 rounded"
+              className="w-full border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 placeholder-gray-400 dark:placeholder-gray-500 px-3 py-2 rounded"
               placeholder="Enter widget title"
             />
           </div>
 
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <label className="block mb-1 font-medium">Width (Grid Units)</label>
+              <label className="block mb-1 font-medium text-gray-800 dark:text-gray-200">Width (Grid Units)</label>
               <input
                 type="number"
                 value={width}
                 min={1}
                 max={12}
                 onChange={(e) => setWidth(Number(e.target.value))}
-                className="w-full border px-3 py-2 rounded"
+                className="w-full border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 px-3 py-2 rounded"
               />
             </div>
             <div>
-              <label className="block mb-1 font-medium">Height (Grid Units)</label>
+              <label className="block mb-1 font-medium text-gray-800 dark:text-gray-200">Height (Grid Units)</label>
               <input
                 type="number"
                 value={height}
                 min={1}
                 max={10}
                 onChange={(e) => setHeight(Number(e.target.value))}
-                className="w-full border px-3 py-2 rounded"
+                className="w-full border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 px-3 py-2 rounded"
               />
             </div>
           </div>
 
           <div>
-            <label className="block mb-1 font-medium">Background Color</label>
+            <label className="block mb-1 font-medium text-gray-800 dark:text-gray-200">Background Color</label>
             <input
               type="color"
               value={color}
@@ -106,45 +106,45 @@ export default function WidgetConfigModal({ isOpen, onClose, widget }) {
           </div>
 
           <div>
-            <label className="block mb-1 font-medium">Stock Symbol</label>
+            <label className="block mb-1 font-medium text-gray-800 dark:text-gray-200">Stock Symbol</label>
             <input
               type="text"
               value={symbol}
               onChange={(e) => setSymbol(e.target.value)}
-              className="w-full border px-3 py-2 rounded"
+              className="w-full border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 placeholder-gray-400 dark:placeholder-gray-500 px-3 py-2 rounded"
               placeholder="e.g., AAPL, GOOGL, MSFT"
             />
           </div>
 
           <div>
-            <label className="block mb-1 font-medium">API Endpoint</label>
+            <label className="block mb-1 font-medium text-gray-800 dark:text-gray-200">API Endpoint</label>
             <input
               type="url"
               value={apiEndpoint}
               onChange={(e) => setApiEndpoint(e.target.value)}
-              className="w-full border px-3 py-2 rounded"
+              className="w-full border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 placeholder-gray-400 dark:placeholder-gray-500 px-3 py-2 rounded"
               placeholder="https://api.example.com/stocks"
             />
           </div>
 
           <div>
-            <label className="block mb-1 font-medium">API Key</label>
+            <label className="block mb-1 font-medium text-gray-800 dark:text-gray-200">API Key</label>
             <input
               type="password"
               value={apiKey}
               onChange={(e) => setApiKey(e.target.value)}
-              className="w-full border px-3 py-2 rounded"
+              className="w-full border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 placeholder-gray-400 dark:placeholder-gray-500 px-3 py-2 rounded"
               placeholder="Your API key"
             />
           </div>
 
           {widget.type === 'finance_card' && (
             <div>
-              <label className="block mb-1 font-medium">Finance Card Type</label>
+              <label className="block mb-1 font-medium text-gray-800 dark:text-gray-200">Finance Card Type</label>
               <select
                 value={financeCardType}
                 onChange={(e) => setFinanceCardType(e.target.value)}
-                className="w-full border px-3 py-2 rounded"
+                className="w-full border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 px-3 py-2 rounded"
               >
                 <option value="watchlist">Watchlist</option>
                 <option value="market_gainers">Market Gainers</option>
@@ -157,22 +157,22 @@ export default function WidgetConfigModal({ isOpen, onClose, widget }) {
           {widget.type === 'chart' && (
             <>
               <div>
-                <label className="block mb-1 font-medium">Chart Type</label>
+              <label className="block mb-1 font-medium text-gray-800 dark:text-gray-200">Chart Type</label>
                 <select
                   value={chartType}
                   onChange={(e) => setChartType(e.target.value)}
-                  className="w-full border px-3 py-2 rounded"
+                className="w-full border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 px-3 py-2 rounded"
                 >
                   <option value="line">Line Chart</option>
                   <option value="candle">Candlestick Chart</option>
                 </select>
               </div>
               <div>
-                <label className="block mb-1 font-medium">Time Interval</label>
+              <label className="block mb-1 font-medium text-gray-800 dark:text-gray-200">Time Interval</label>
                 <select
                   value={chartInterval}
                   onChange={(e) => setChartInterval(e.target.value)}
-                  className="w-full border px-3 py-2 rounded"
+                className="w-full border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 px-3 py-2 rounded"
                 >
                   <option value="1d">Daily</option>
                   <option value="1wk">Weekly</option>
@@ -186,7 +186,7 @@ export default function WidgetConfigModal({ isOpen, onClose, widget }) {
             <button
               type="button"
               onClick={onClose}
-              className="px-4 py-2 bg-gray-300 rounded hover:bg-gray-400"
+              className="px-4 py-2 bg-gray-200 dark:bg-gray-700 text-gray-900 dark:text-gray-100 rounded hover:bg-gray-300 dark:hover:bg-gray-600"
             >
               Cancel
             </button>

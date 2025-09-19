@@ -1,6 +1,7 @@
 "use client";
 import { useState, useEffect } from "react";
 import { WidgetLoadingWrapper, TableSkeleton } from "../LoadingStates";
+import { normalizeToTableRows } from "../../../lib/utils";
 
 export default function TableWidget({ widget }) {
   const [stocks, setStocks] = useState([]);
@@ -67,22 +68,8 @@ export default function TableWidget({ widget }) {
         }
         
         // Transform Alpha Vantage data to our format
-        if (data["Global Quote"]) {
-          const quote = data["Global Quote"];
-          const transformedStock = {
-            symbol: quote["01. symbol"],
-            name: quote["01. symbol"], // Alpha Vantage doesn't provide company name in this endpoint
-            price: parseFloat(quote["05. price"]),
-            change: parseFloat(quote["09. change"]),
-            changePercent: parseFloat(quote["10. change percent"].replace('%', '')),
-            volume: parseInt(quote["06. volume"])
-          };
-          setStocks([transformedStock]);
-        } else if (data.stocks || Array.isArray(data)) {
-          setStocks(data.stocks || data);
-        } else {
-          setStocks(mockStocks);
-        }
+        const rows = normalizeToTableRows(data);
+        setStocks(rows.length ? rows : mockStocks);
       } else {
         // Use mock data
         setStocks(mockStocks);
@@ -115,18 +102,18 @@ export default function TableWidget({ widget }) {
   return (
     <div className="h-full flex flex-col">
       <div className="flex justify-between items-center mb-4">
-        <h3 className="text-lg font-semibold">{widget.title}</h3>
+        <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100">{widget.title}</h3>
         <button
           onClick={fetchStockData}
           disabled={loading}
-          className="px-3 py-1 bg-blue-500 text-white rounded text-sm hover:bg-blue-600 disabled:opacity-50"
+          className="px-3 py-1 bg-blue-600 text-white rounded text-sm hover:bg-blue-700 disabled:opacity-50"
         >
           {loading ? "Loading..." : "Refresh"}
         </button>
       </div>
 
       {error && (
-        <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
+        <div className="bg-red-100 dark:bg-red-900/30 border border-red-400 dark:border-red-800 text-red-700 dark:text-red-300 px-4 py-3 rounded mb-4">
           {error}
         </div>
       )}
@@ -137,12 +124,12 @@ export default function TableWidget({ widget }) {
           placeholder="Search stocks..."
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
-          className="flex-1 border px-3 py-2 rounded text-sm"
+          className="flex-1 border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 px-3 py-2 rounded text-sm"
         />
         <select
           value={filter}
           onChange={(e) => setFilter(e.target.value)}
-          className="border px-3 py-2 rounded text-sm"
+          className="border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 px-3 py-2 rounded text-sm"
         >
           <option value="all">All Stocks</option>
           <option value="gainers">Gainers</option>
@@ -159,29 +146,29 @@ export default function TableWidget({ widget }) {
           emptyMessage="No stock data available"
         >
           <table className="w-full text-sm">
-            <thead className="bg-gray-50 sticky top-0">
+            <thead className="bg-gray-50 dark:bg-gray-900/40 sticky top-0">
               <tr>
-                <th className="text-left p-2 font-medium">Symbol</th>
-                <th className="text-left p-2 font-medium">Name</th>
-                <th className="text-right p-2 font-medium">Price</th>
-                <th className="text-right p-2 font-medium">Change</th>
-                <th className="text-right p-2 font-medium">% Change</th>
-                <th className="text-right p-2 font-medium">Volume</th>
+                <th className="text-left p-2 font-medium text-gray-700 dark:text-gray-300">Symbol</th>
+                <th className="text-left p-2 font-medium text-gray-700 dark:text-gray-300">Name</th>
+                <th className="text-right p-2 font-medium text-gray-700 dark:text-gray-300">Price</th>
+                <th className="text-right p-2 font-medium text-gray-700 dark:text-gray-300">Change</th>
+                <th className="text-right p-2 font-medium text-gray-700 dark:text-gray-300">% Change</th>
+                <th className="text-right p-2 font-medium text-gray-700 dark:text-gray-300">Volume</th>
               </tr>
             </thead>
             <tbody>
               {paginatedStocks.map((stock, index) => (
-                <tr key={stock.symbol} className={index % 2 === 0 ? "bg-white" : "bg-gray-50"}>
-                  <td className="p-2 font-medium">{stock.symbol}</td>
-                  <td className="p-2">{stock.name}</td>
-                  <td className="p-2 text-right">{formatPrice(stock.price)}</td>
+                <tr key={stock.symbol} className={index % 2 === 0 ? "bg-white dark:bg-gray-900" : "bg-gray-50 dark:bg-gray-800/50"}>
+                  <td className="p-2 font-medium text-gray-900 dark:text-gray-100">{stock.symbol}</td>
+                  <td className="p-2 text-gray-900 dark:text-gray-100">{stock.name}</td>
+                  <td className="p-2 text-right text-gray-900 dark:text-gray-100">{formatPrice(stock.price)}</td>
                   <td className={`p-2 text-right ${stock.change >= 0 ? "text-green-600" : "text-red-600"}`}>
                     {formatChange(stock.change)}
                   </td>
                   <td className={`p-2 text-right ${stock.changePercent >= 0 ? "text-green-600" : "text-red-600"}`}>
                     {formatChangePercent(stock.changePercent)}
                   </td>
-                  <td className="p-2 text-right">{stock.volume.toLocaleString()}</td>
+                  <td className="p-2 text-right text-gray-900 dark:text-gray-100">{stock.volume.toLocaleString()}</td>
                 </tr>
               ))}
             </tbody>

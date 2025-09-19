@@ -378,11 +378,11 @@ export default function ChartWidget({ widget = {} }) {
 
       {error && <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">{error}</div>}
 
-      <div className="flex-1 bg-white border rounded-lg p-4">
+      <div className="flex-1 bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-lg p-0">
         <WidgetLoadingWrapper loading={loading} error={error} widgetType="chart" empty={!Array.isArray(chartData) || chartData.length === 0} emptyMessage="No chart data available">
-          <div className="h-full">
-            <div className="text-sm text-gray-600 mb-2">{widget.chartType === "candle" ? "Candlestick" : "Line"} Chart - {getIntervalLabel(selectedInterval)}</div>
-            <canvas ref={canvasRef} className="w-full h-full" style={{ maxHeight: "300px" }} />
+          <div className="h-[320px] sm:h-[360px] md:h-[380px] lg:h-[420px] p-4">
+            <div className="text-sm text-gray-600 dark:text-gray-300 mb-2">{widget.chartType === "candle" ? "Candlestick" : "Line"} Chart - {getIntervalLabel(selectedInterval)}</div>
+            <canvas ref={canvasRef} className="w-full h-full" />
           </div>
         </WidgetLoadingWrapper>
       </div>

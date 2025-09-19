@@ -112,13 +112,13 @@ import React from "react";
 import RGL, { WidthProvider } from "react-grid-layout";
 import WidgetCard from "./WidgetCard";
 import { useDispatch } from "react-redux";
-import { updateWidgetLayout } from "../../store/widgetsSlice";
+import { updateWidgetLayout, mergeWidgets as mergeAllWidgets } from "../../store/widgetsSlice";
 import "react-grid-layout/css/styles.css";
 import "react-resizable/css/styles.css";
 
 const ReactGridLayout = WidthProvider(RGL);
 
-export default function DashboardGrid({ widgets, onDelete, onEdit, onConfig, setWidgets }) {
+export default function DashboardGrid({ widgets, onDelete, onEdit, onConfig }) {
   const dispatch = useDispatch();
 
   // Generate layout from widgets
@@ -154,10 +154,15 @@ export default function DashboardGrid({ widgets, onDelete, onEdit, onConfig, set
     fileReader.onload = (e) => {
       try {
         const imported = JSON.parse(e.target.result);
-        if (Array.isArray(imported)) {
-          setWidgets(imported); // replace current dashboard
+        const widgetsArray = Array.isArray(imported)
+          ? imported
+          : (Array.isArray(imported?.widgets) ? imported.widgets : null);
+
+        if (widgetsArray && widgetsArray.length >= 0) {
+          dispatch(mergeAllWidgets(widgetsArray));
+          alert("Dashboard merged successfully.");
         } else {
-          alert("Invalid dashboard file format!");
+          alert("Invalid dashboard file format! Expected an array or { widgets: [] }.");
         }
       } catch (err) {
         alert("Invalid JSON file!");
@@ -194,7 +199,7 @@ export default function DashboardGrid({ widgets, onDelete, onEdit, onConfig, set
         layout={layout}
         cols={12}
         rowHeight={60}
-        width={typeof window !== "undefined" ? Math.min(window.innerWidth - 32, 1200) : 1200}
+        width={1200}
         onLayoutChange={handleLayoutChange}
         isResizable={true}
         isDraggable={true}
